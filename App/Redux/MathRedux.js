@@ -4,7 +4,8 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  mathRequest: ['data'],
+  keyPress: ['current','shiftOn','key'],
+  onKeyboardProcessed: ['result'],
   mathSuccess: ['payload'],
   mathFailure: null
 })
@@ -15,10 +16,9 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  data: null,
-  fetching: null,
-  payload: null,
-  error: null
+  shiftOn: false,
+  error: null,
+  current: {}
 })
 
 /* ------------- Reducers ------------- */
@@ -29,8 +29,8 @@ export const request = (state, { data }) =>
 
 // successful api lookup
 export const success = (state, action) => {
-  const { payload } = action
-  return state.merge({ fetching: false, error: null, payload })
+  const { result } = action
+  return state.merge({ fetching: false, error: null, current : result })
 }
 
 // Something went wrong somewhere.
@@ -40,7 +40,7 @@ export const failure = state =>
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.MATH_REQUEST]: request,
-  [Types.MATH_SUCCESS]: success,
+  [Types.KEY_PRESS]: request,
+  [Types.ON_KEYBOARD_PROCESSED]: success,
   [Types.MATH_FAILURE]: failure
 })

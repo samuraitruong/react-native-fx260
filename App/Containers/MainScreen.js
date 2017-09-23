@@ -4,18 +4,19 @@ import { connect } from 'react-redux'
 import Keyboard from '../Keyboard'
 
 // Add Actions - replace 'Your' with whatever your reducer is called :)
-// import YourActions from '../Redux/YourRedux'
+import MathActions from '../Redux/MathRedux'
 
 // Styles
 import styles from './Styles/MainScreenStyle'
 
 class MainScreen extends Component {
   renderRowKeys(keys) {
+    const{ shiftOn, current} = this.props.math;
     const buttons =  keys.map(key => {
       return (
         <View key={key.shift + key.normal} style={styles.keyboardKeyWrap}>
           <Text style={styles.shiftText}>{key.shift}</Text>
-          <TouchableOpacity  title={key.normal} style={styles.keyboardButton}><Text style={styles.keyboardButtonText}>{key.normal}</Text></TouchableOpacity >
+          <TouchableOpacity  title={key.normal} style={styles.keyboardButton} onPress={()=> this.props.keyPress(current,shiftOn, key)}><Text style={styles.keyboardButtonText}>{key.normal}</Text></TouchableOpacity>
         </View>
       )
     });
@@ -26,6 +27,8 @@ class MainScreen extends Component {
     )
   }
   render () {
+    const {display} = this.props.math.current;
+
     return (
       <View style={styles.mainContainer}>
         <View behavior='position' style={styles.mainLCD}>
@@ -33,7 +36,7 @@ class MainScreen extends Component {
             <Text style={styles.indicatorText}>DEC</Text>
             <Text style={styles.indicatorTextDisabled}>HEX</Text>
           </View>
-          <Text style={styles.lcd}>f(x)=⨋</Text>
+          <Text style={styles.lcd}>{display?display:'Welcome to FX260 '}</Text>
         </View>
         <View style={styles.keyboard}>
         {Keyboard.map(row => this.renderRowKeys(row))}
@@ -45,11 +48,13 @@ class MainScreen extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    math: state.math
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    keyPress: (current,shiftOn,key) => dispatch(MathActions.keyPress(current,shiftOn,key))
   }
 }
 
