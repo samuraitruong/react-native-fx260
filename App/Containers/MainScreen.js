@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, KeyboardAvoidingView, Button } from 'react-native'
+import { View, Text, KeyboardAvoidingView, TouchableOpacity  } from 'react-native'
 import { connect } from 'react-redux'
 import Keyboard from '../Keyboard'
 
@@ -15,7 +15,7 @@ class MainScreen extends Component {
       return (
         <View key={key.shift + key.normal} style={styles.keyboardKeyWrap}>
           <Text style={styles.shiftText}>{key.shift}</Text>
-          <Button title={key.normal} style={styles.keyboardButton}><Text style={styles.keyboardButtonText}>{key.normal}</Text></Button>
+          <TouchableOpacity  title={key.normal} style={styles.keyboardButton}><Text style={styles.keyboardButtonText}>{key.normal}</Text></TouchableOpacity >
         </View>
       )
     });
@@ -28,8 +28,12 @@ class MainScreen extends Component {
   render () {
     return (
       <View style={styles.mainContainer}>
-        <View behavior='position' style={styles.section}>
-          <Text style={styles.lcd}>f(x)=</Text>
+        <View behavior='position' style={styles.mainLCD}>
+          <View style={styles.indicator}>
+            <Text style={styles.indicatorText}>DEC</Text>
+            <Text style={styles.indicatorTextDisabled}>HEX</Text>
+          </View>
+          <Text style={styles.lcd}>f(x)=⨋</Text>
         </View>
         <View style={styles.keyboard}>
         {Keyboard.map(row => this.renderRowKeys(row))}

@@ -5,12 +5,18 @@ import Colors from '../../Themes/Colors'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
+  mainLCD: {
+    backgroundColor: Colors.ldcBackground,
+    borderBottomWidth: 4,
+    borderBottomColor: 'red'
+  },
   lcd: {
-    fontSize : 30,
-    backgroundColor: 'blue',
+    fontSize : 40,
     color: 'white',
-    padding:20,
-    fontFamily: 'STIX2Math'
+    paddingLeft:Metrics.doubleBaseMargin,
+    paddingRight:Metrics.doubleBaseMargin,
+    paddingBottom: Metrics.baseMargin,
+    //fontFamily: 'STIXTwoMath'
   },
   keyboard: {
     flex: 1,
@@ -18,18 +24,29 @@ export default StyleSheet.create({
   },
   keyboardRow: {
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    flexGrow:1,
+    flexShrink: 1,
   },
   keyboardButton: {
-    padding: 15,
-    height: 40
+    flex:2,
+    backgroundColor:Colors.cloud,
+    justifyContent: 'center',
+    alignItems: 'center'    
+    //alignSelf:'stretch',
+
   },
   keyboardButtonText: {
-    fontSize: 28
+    fontSize: 35,
+    fontWeight:'bold'
   },
   keyboardKeyWrap: {
     flex: 1/6,
-    margin: 15,
+    margin: 10,
+    //backgroundColor:'red',
+    flexDirection:'column',
+    //justifyContent : 'center'
+    
   },
   shiftText: {
     color: Colors.darkOrange,
@@ -37,5 +54,21 @@ export default StyleSheet.create({
     height:30,
     alignSelf: 'stretch',
     textAlign:'center'
+  },
+  indicator: {
+    paddingLeft:Metrics.doubleBaseMargin,
+    paddingLeft:Metrics.doubleBaseMargin,
+    flexDirection: 'row'
+  },
+  indicatorText: {
+    fontSize: 18,
+    fontWeight:'bold',
+    color: Colors.darkOrange, 
+    marginRight: Metrics.baseMargin
+  },
+  indicatorTextDisabled: {
+    fontSize: 18,
+    color: Colors.brown,
+    marginRight: Metrics.baseMargin
   }
 })
