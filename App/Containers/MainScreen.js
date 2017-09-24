@@ -13,10 +13,13 @@ class MainScreen extends Component {
   renderRowKeys(keys) {
     const{ shiftOn, current} = this.props.math;
     const buttons =  keys.map(key => {
+      let {display, expr} = key.normal;
+      display = display || key.normal;
+
       return (
-        <View key={key.shift + key.normal} style={styles.keyboardKeyWrap}>
+        <View key={key.shift + display} style={styles.keyboardKeyWrap}>
           <Text style={styles.shiftText}>{key.shift}</Text>
-          <TouchableOpacity  title={key.normal} style={styles.keyboardButton} onPress={()=> this.props.keyPress(current,shiftOn, key)}><Text style={styles.keyboardButtonText}>{key.normal}</Text></TouchableOpacity>
+          <TouchableOpacity  title={display} style={styles.keyboardButton} onPress={()=> this.props.keyPress(current,shiftOn, key)}><Text style={styles.keyboardButtonText}>{display}</Text></TouchableOpacity>
         </View>
       )
     });
