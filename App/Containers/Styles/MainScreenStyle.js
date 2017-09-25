@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { ApplicationStyles } from '../../Themes/'
-import  Metrics from '../../Themes/Metrics'
+import  Metrics, {isPhone} from '../../Themes/Metrics'
 import Colors from '../../Themes/Colors'
 
 export default StyleSheet.create({
@@ -11,7 +11,7 @@ export default StyleSheet.create({
     borderBottomColor: 'red'
   },
   lcd: {
-    fontSize : 40,
+    fontSize : isPhone? 30: 40,
     color: 'white',
     paddingLeft:Metrics.doubleBaseMargin,
     paddingRight:Metrics.doubleBaseMargin,
@@ -37,21 +37,19 @@ export default StyleSheet.create({
 
   },
   keyboardButtonText: {
-    fontSize: 35,
+    fontSize: isPhone?20: 35,
     fontWeight:'bold'
   },
   keyboardKeyWrap: {
     flex: 1/6,
-    margin: 10,
-    //backgroundColor:'red',
+    margin: isPhone?4: 10,
     flexDirection:'column',
-    //justifyContent : 'center'
     
   },
   shiftText: {
     color: Colors.darkOrange,
-    fontSize:24,
-    height:30,
+    fontSize:isPhone? 16: 24,
+    height:isPhone? 20 : 30,
     alignSelf: 'stretch',
     textAlign:'center'
   },
@@ -61,13 +59,13 @@ export default StyleSheet.create({
     flexDirection: 'row'
   },
   indicatorText: {
-    fontSize: 18,
+    fontSize: isPhone? 14: 18,
     fontWeight:'bold',
     color: Colors.darkOrange, 
     marginRight: Metrics.baseMargin
   },
   indicatorTextDisabled: {
-    fontSize: 18,
+    fontSize: isPhone? 14: 18,
     color: Colors.brown,
     marginRight: Metrics.baseMargin
   }

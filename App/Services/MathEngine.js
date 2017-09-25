@@ -1,6 +1,6 @@
 import Persitence from './ImmutablePersistenceTransform'
 var Parser = require('expr-eval').Parser;
-
+var math = require('mathjs');
 
 const processKey =  (currentState,shiftOn, key) => {
     console.tron.display({name: 'process key', value: key})
@@ -12,19 +12,18 @@ const processKey =  (currentState,shiftOn, key) => {
         newState.reset = null;
     }
 
-    let {display, expr, lcdDisplay} = key.normal;
+    let {display, expr, lcdDisplay, cmd} = shiftOn?key.shift: key.normal;
     display = lcdDisplay || display;
     
-    if(typeof key.normal.cmd == 'function') {
+    if(typeof cmd == 'function') {
         console.tron.display({name: 'key has command', value: key})
-        return key.normal.cmd(currentState, shiftOn, key);
+        return cmd(currentState, shiftOn, key);
     }
     console.tron.display({name: 'process key get display value', value: display})
-    if(!display && key.normal)
-    display =  key.normal;
+    
+    display =  display || (shiftOn?key.shift : key.normal);
 
-    if(!expr && key.normal)
-    expr =  key.normal;
+    expr =  expr || (shiftOn?key.shift : key.normal);
 
     newState.display = (newState.display? newState.display: '') +  display;
     newState.expr = (newState.expr? newState.expr: '') +  expr;
@@ -45,7 +44,6 @@ export const clearCommand = (currentState, shiftOn, key) => {
 export const evalExpr = (currentState, shiftOn, key) => {
    
     const parser= new Parser();
-    console.tron.display({name: 'eval expression ', value: currentState})
     const expr = parser.parse(currentState.expr)
     return {
         ok: true, 
@@ -53,6 +51,38 @@ export const evalExpr = (currentState, shiftOn, key) => {
         data: {...currentState,display: expr.evaluate().toString(), reset: true}
     }
 }
+export const shiftOn = (currentState, shiftOn, key) => {
+     return {
+         ok: true, 
+         shiftOn: shiftOn?false:true,
+         data: {...currentState}
+     }
+ }
+
+ export const tenPowX = (currentState, shiftOn, key) => {
+    const result = evalExpr(currentState, shiftOn, key)
+    let clone = Object.assign({}, result.data);
+
+    let value = Math.pow(10, parseFloat(clone.display));
+   
+    return    {
+        data : {display: value.toString(), expr: value},
+        ok: true
+    }
+    
+}
+
+export const logaritX = (currentState, shiftOn, key) => {
+    const result = evalExpr(currentState, shiftOn, key)
+    let value = Math.exp(parseFloat(result.data.display));
+   
+    return    {
+        data : {display: value.toString(), expr: value},
+        ok: true
+    }
+}
+
+
 export default {
     processKey
 }
