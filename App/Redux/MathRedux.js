@@ -7,6 +7,7 @@ const { Types, Creators } = createActions({
   keyPress: ['current','shiftOn','key'],
   onKeyboardProcessed: ['result'],
   mathSuccess: ['payload'],
+  toggleShiftKey : ['shiftOn'],
   mathFailure: null
 })
 
@@ -37,10 +38,15 @@ export const success = (state, action) => {
 export const failure = state =>
   state.merge({ fetching: false, error: true, payload: null })
 
+export const toggleShiftKey = (state, {shiftOn}) =>
+  state.merge({ shiftOn })
+
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.KEY_PRESS]: request,
   [Types.ON_KEYBOARD_PROCESSED]: success,
-  [Types.MATH_FAILURE]: failure
+  [Types.MATH_FAILURE]: failure,
+  [Types.TOGGLE_SHIFT_KEY] : toggleShiftKey
 })

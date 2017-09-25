@@ -53,6 +53,14 @@ export const evalExpr = (currentState, shiftOn, key) => {
         data: {...currentState,display: expr.evaluate().toString(), reset: true}
     }
 }
+export const shiftOn = (currentState, shiftOn, key) => {
+     return {
+         ok: true, 
+         shiftOn: !shiftOn,
+         data: {...currentState}
+     }
+ }
+
 export default {
     processKey
 }

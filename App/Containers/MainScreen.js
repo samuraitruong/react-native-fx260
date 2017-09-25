@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import { View, Text, KeyboardAvoidingView, TouchableOpacity  } from 'react-native'
-import { connect } from 'react-redux'
+import React, {Component} from 'react'
+import {View, Text, KeyboardAvoidingView, TouchableOpacity} from 'react-native'
+import {connect} from 'react-redux'
 import Keyboard from '../Keyboard'
 
 // Add Actions - replace 'Your' with whatever your reducer is called :)
@@ -11,25 +11,31 @@ import styles from './Styles/MainScreenStyle'
 
 class MainScreen extends Component {
   renderRowKeys(keys) {
-    const{ shiftOn, current} = this.props.math;
-    const buttons =  keys.map(key => {
+    const {shiftOn, current} = this.props.math;
+    const buttons = keys.map(key => {
       let {display, expr} = key.normal;
       display = display || key.normal;
+      let shiftText = key.shift;
 
       return (
         <View key={key.shift + display} style={styles.keyboardKeyWrap}>
-          <Text style={styles.shiftText}>{key.shift}</Text>
-          <TouchableOpacity  title={display} style={styles.keyboardButton} onPress={()=> this.props.keyPress(current,shiftOn, key)}><Text style={styles.keyboardButtonText}>{display}</Text></TouchableOpacity>
+          <Text style={styles.shiftText}>{shiftOn? display: shiftText}</Text>
+          <TouchableOpacity
+            title={display}
+            style={styles.keyboardButton}
+            onPress={() => this.props.keyPress(current, shiftOn, key)}>
+            <Text style={styles.keyboardButtonText}>{shiftOn? shiftText: display}</Text>
+          </TouchableOpacity>
         </View>
       )
     });
     return (
       <View style={styles.keyboardRow}>
-      {buttons}
+        {buttons}
       </View>
     )
   }
-  render () {
+  render() {
     const {display} = this.props.math.current;
 
     return (
@@ -39,10 +45,12 @@ class MainScreen extends Component {
             <Text style={styles.indicatorText}>DEC</Text>
             <Text style={styles.indicatorTextDisabled}>HEX</Text>
           </View>
-          <Text style={styles.lcd}>{display?display:'Welcome to FX260 '}</Text>
+          <Text style={styles.lcd}>{display
+              ? display
+              : 'Welcome to FX260 '}</Text>
         </View>
         <View style={styles.keyboard}>
-        {Keyboard.map(row => this.renderRowKeys(row))}
+          {Keyboard.map(row => this.renderRowKeys(row))}
         </View>
       </View>
     )
@@ -50,14 +58,12 @@ class MainScreen extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {
-    math: state.math
-  }
+  return {math: state.math}
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    keyPress: (current,shiftOn,key) => dispatch(MathActions.keyPress(current,shiftOn,key))
+    keyPress: (current, shiftOn, key) => dispatch(MathActions.keyPress(current, shiftOn, key))
   }
 }
 
