@@ -36,6 +36,7 @@ class MainScreen extends Component {
       <View style={styles.mainContainer}>
         <View behavior='position' style={styles.mainLCD}>
           <View style={styles.indicator}>
+            <Text style={styles.indicatorTextDisabled}>SHIFT</Text>
             <Text style={styles.indicatorText}>DEC</Text>
             <Text style={styles.indicatorTextDisabled}>HEX</Text>
           </View>
