@@ -4,13 +4,14 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  keyPress: ['current','shiftOn','key'],
+  keyPress: ['current','shiftOn','key', 'hyp'],
   onKeyboardProcessed: ['result'],
   mathSuccess: ['payload'],
   toggleShiftKey : ['shiftOn'],
   mathFailure: null,
   onError : ['error'],
-  addMemoryItem: ['memoryItem']
+  addMemoryItem: ['memoryItem'],
+  toggleHyp: ['hyp']
 })
 
 export const MathTypes = Types
@@ -24,6 +25,7 @@ export const INITIAL_STATE = Immutable({
   current: {}, 
   keyChain: [],
   memories: [],
+  hyp: false
 
 })
 
@@ -55,5 +57,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.MATH_FAILURE]: failure,
   [Types.ON_ERROR] : error,
   [Types.TOGGLE_SHIFT_KEY] : toggleShiftKey,
-  [Types.ADD_MEMORY_ITEM] : (state, {memoryItem})=> state.merge({memories: [memoryItem, ...state.memories]})
+  [Types.ADD_MEMORY_ITEM] : (state, {memoryItem})=> state.merge({memories: [memoryItem, ...state.memories]}),
+  [Types.TOGGLE_HYP] : (state, {hyp}) => state.merge({hyp})
 })

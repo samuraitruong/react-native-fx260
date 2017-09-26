@@ -2,7 +2,7 @@ import Persitence from './ImmutablePersistenceTransform'
 var Parser = require('expr-eval').Parser;
 var math = require('mathjs');
 
-const processKey =  (currentState,shiftOn, key) => {
+const processKey =  (currentState,shiftOn, key, hyp) => {
     console.tron.display({name: 'process key', value: key})
     const newState = {...currentState};
     
@@ -16,8 +16,8 @@ const processKey =  (currentState,shiftOn, key) => {
     display = lcdDisplay || display;
     
     if(typeof cmd == 'function') {
-        console.tron.display({name: 'key has command', value: key})
-        return cmd(currentState, shiftOn, key);
+        console.tron.display({name: 'key has command', value: {key, hyp}})
+        return cmd(currentState, shiftOn, key, hyp);
     }
     console.tron.display({name: 'process key get display value', value: display})
     
@@ -51,7 +51,7 @@ export const evalExpr = (currentState, shiftOn, key) => {
         data: {...currentState,display: expr.evaluate().toString(), reset: true}
     }
 }
-export const shiftOn = (currentState, shiftOn, key) => {
+export const shiftOn = (currentState, shiftOn, key, hyp) => {
      return {
          ok: true, 
          shiftOn: shiftOn?false:true,
@@ -59,10 +59,16 @@ export const shiftOn = (currentState, shiftOn, key) => {
      }
  }
 
- export const saveMemory = (currentState, shiftOn, key) => {
+ export const toggleHyp = (currentState, shiftOn, key, hyp) => {
     return {
-        ok: true, 
-        memory: currentState
+        ok: true,
+        hyp: !hyp
+    }
+}
+
+ export const saveMemory = (currentState, shiftOn, key, hyp) => {
+    return {
+        ok: true
     }
 }
 

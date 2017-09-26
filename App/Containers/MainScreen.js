@@ -10,9 +10,10 @@ import MathActions from '../Redux/MathRedux'
 import styles from './Styles/MainScreenStyle'
 
 class MainScreen extends Component {
-  renderRowKeys(keys) {
-    const {shiftOn, current} = this.props.math;
-    const buttons = keys.map(key => {
+  renderRowKeys(keys, index) {
+    const {shiftOn, current, hyp} = this.props.math;
+
+    const buttons = keys.filter(key=> (key.hyp != true && !hyp) || (key.hyp == null || (hyp && key.hyp))).map(key => {
 
       let {display, expr} = key.normal;
       display = display || key.normal;
@@ -25,22 +26,22 @@ class MainScreen extends Component {
           <TouchableOpacity
             title={display}
             style={styles.keyboardButton}
-            onPress={() => this.props.keyPress(current, shiftOn, key)}
-            onLongPress={() => this.props.keyPress(current, true, key)}>
+            onPress={() => this.props.keyPress(current, shiftOn, key, hyp)}
+            onLongPress={() => this.props.keyPress(current, true, key, hyp)}>
             <Text style={styles.keyboardButtonText}>{shiftOn? shiftText: display}</Text>
           </TouchableOpacity>
         </View>
       )
     });
     return (
-      <View style={styles.keyboardRow}>
+      <View style={styles.keyboardRow} key={"key" + index}>
         {buttons}
       </View>
     )
   }
   render() {
     const {display } = this.props.math.current;
-    const {shiftOn ,error, memories} = this.props.math;
+    const {shiftOn ,error, memories, hyp} = this.props.math;
 
     return (
       <View style={styles.mainContainer}>
@@ -51,6 +52,7 @@ class MainScreen extends Component {
             <Text style={styles.indicatorTextDisabled}>HEX</Text>
             {error!= null? <Text style={styles.indicatorError}>ERROR</Text>: null}
              {memories.length > 0? <Text style={styles.indicatorText}>M+</Text> : null}
+             {hyp ? <Text style={styles.indicatorText}>HYP</Text> : null}
 
           </View>
           <Text style={styles.lcd}>{display
@@ -58,7 +60,7 @@ class MainScreen extends Component {
               : 'Welcome to FX260 '}</Text>
         </View>
         <View style={styles.keyboard}>
-          {Keyboard.map(row => this.renderRowKeys(row))}
+          {Keyboard.map((row, index) => this.renderRowKeys(row, index))}
         </View>
       </View>
     )
@@ -71,7 +73,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    keyPress: (current, shiftOn, key) => dispatch(MathActions.keyPress(current, shiftOn, key))
+    keyPress: (current, shiftOn, key, hyp) => dispatch(MathActions.keyPress(current, shiftOn, key,hyp))
   }
 }
 
