@@ -1,0 +1,13 @@
+stages:
+  - build
+  - package
+  - deploy
+  
+before_script:
+
+android-build:
+  stage: build
+  script: "cd android && gradlew assembleRelease"
+  artifacts:
+    paths:
+      - android/app/build/outputs/apks/*.zip
