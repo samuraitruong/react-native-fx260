@@ -9,8 +9,8 @@ before_script:
 android-build:
   stage: build
   script: 
-    - "sudo npm install"
-    - "sudo npm run android:build"
+    - "npm install"
+    - "npm run android:build"
   artifacts:
     paths:
       - android/app/build/outputs/apks/*.zip
