@@ -4,12 +4,11 @@ stages:
   - deploy
   
 before_script:
-   
+   - npm install
 
 android-build:
   stage: build
   script: 
-    - "npm install"
     - "npm run android:build"
   artifacts:
     paths:
