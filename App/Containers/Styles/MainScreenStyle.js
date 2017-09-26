@@ -42,7 +42,7 @@ export default StyleSheet.create({
   },
   keyboardKeyWrap: {
     flex: 1/6,
-    margin: isPhone?4: 10,
+    margin: isPhone?2: 10,
     flexDirection:'column',
     
   },
@@ -62,6 +62,12 @@ export default StyleSheet.create({
     fontSize: isPhone? 14: 18,
     fontWeight:'bold',
     color: Colors.darkOrange, 
+    marginRight: Metrics.baseMargin
+  },
+  indicatorError: {
+    fontSize: isPhone? 14: 18,
+    fontWeight:'bold',
+    color: Colors.fire, 
     marginRight: Metrics.baseMargin
   },
   indicatorTextDisabled: {

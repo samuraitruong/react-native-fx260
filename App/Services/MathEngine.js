@@ -59,6 +59,14 @@ export const shiftOn = (currentState, shiftOn, key) => {
      }
  }
 
+ export const saveMemory = (currentState, shiftOn, key) => {
+    return {
+        ok: true, 
+        memory: currentState
+    }
+}
+
+
  export const tenPowX = (currentState, shiftOn, key) => {
     const result = evalExpr(currentState, shiftOn, key)
     let clone = Object.assign({}, result.data);

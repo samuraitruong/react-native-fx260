@@ -8,7 +8,9 @@ const { Types, Creators } = createActions({
   onKeyboardProcessed: ['result'],
   mathSuccess: ['payload'],
   toggleShiftKey : ['shiftOn'],
-  mathFailure: null
+  mathFailure: null,
+  onError : ['error'],
+  addMemoryItem: ['memoryItem']
 })
 
 export const MathTypes = Types
@@ -19,7 +21,10 @@ export default Creators
 export const INITIAL_STATE = Immutable({
   shiftOn: false,
   error: null,
-  current: {}
+  current: {}, 
+  keyChain: [],
+  memories: [],
+
 })
 
 /* ------------- Reducers ------------- */
@@ -41,12 +46,14 @@ export const failure = state =>
 export const toggleShiftKey = (state, {shiftOn}) =>
   state.merge({ shiftOn })
 
-
+export const error = (state, {error})=> state.merge({error, current: {}})
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.KEY_PRESS]: request,
   [Types.ON_KEYBOARD_PROCESSED]: success,
   [Types.MATH_FAILURE]: failure,
-  [Types.TOGGLE_SHIFT_KEY] : toggleShiftKey
+  [Types.ON_ERROR] : error,
+  [Types.TOGGLE_SHIFT_KEY] : toggleShiftKey,
+  [Types.ADD_MEMORY_ITEM] : (state, {memoryItem})=> state.merge({memories: [memoryItem, ...state.memories]})
 })

@@ -25,7 +25,8 @@ class MainScreen extends Component {
           <TouchableOpacity
             title={display}
             style={styles.keyboardButton}
-            onPress={() => this.props.keyPress(current, shiftOn, key)}>
+            onPress={() => this.props.keyPress(current, shiftOn, key)}
+            onLongPress={() => this.props.keyPress(current, true, key)}>
             <Text style={styles.keyboardButtonText}>{shiftOn? shiftText: display}</Text>
           </TouchableOpacity>
         </View>
@@ -38,8 +39,8 @@ class MainScreen extends Component {
     )
   }
   render() {
-    const {display} = this.props.math.current;
-    const {shiftOn } = this.props.math;
+    const {display } = this.props.math.current;
+    const {shiftOn ,error, memories} = this.props.math;
 
     return (
       <View style={styles.mainContainer}>
@@ -48,6 +49,9 @@ class MainScreen extends Component {
             <Text style={shiftOn?styles.indicatorText : styles.indicatorTextDisabled}>SHIFT</Text>
             <Text style={styles.indicatorText}>DEC</Text>
             <Text style={styles.indicatorTextDisabled}>HEX</Text>
+            {error!= null? <Text style={styles.indicatorError}>ERROR</Text>: null}
+             {memories.length > 0? <Text style={styles.indicatorText}>M+</Text> : null}
+
           </View>
           <Text style={styles.lcd}>{display
               ? display
