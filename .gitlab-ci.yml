@@ -4,6 +4,7 @@ stages:
   - deploy
   
 before_script:
+   - export PATH=/root/.nvm/versions/node/v8.5.0/bin
    - sudo chown -R $(whoami) $(/root/.nvm/versions/node/v8.5.0)/{lib/node_modules,bin,share}
    - npm install
 
