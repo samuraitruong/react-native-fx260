@@ -4,10 +4,11 @@ stages:
   - deploy
   
 before_script:
+    - npm install
 
 android-build:
   stage: build
-  script: "cd android && .\gradlew.bat assembleRelease"
+  script: "npm run android:build"
   artifacts:
     paths:
       - android/app/build/outputs/apks/*.zip
