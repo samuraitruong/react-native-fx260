@@ -4,8 +4,9 @@ stages:
   - deploy
   
 before_script:
-   - export PATH=/root/.nvm/versions/node/v8.5.0/bin:$PATH
-   - /root/.nvm/versions/node/v8.5.0/bin/npm install
+   - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh |   NVM_DIR=/usr/local/nvm bash
+   - nvm install 8.5.0
+   - npm install
 
 android-build:
   stage: build
