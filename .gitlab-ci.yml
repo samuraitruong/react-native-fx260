@@ -4,6 +4,7 @@ stages:
   - deploy
   
 before_script:
+   - echo whoami
    - nvm install 8.5.0
    - npm install
 
