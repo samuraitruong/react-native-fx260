@@ -1,5 +1,5 @@
 import Persitence from './ImmutablePersistenceTransform'
-var Parser = require('expr-eval').Parser;
+import ExprEval from '../expr-eval/index'
 var math = require('mathjs');
 
 const processKey =  (currentState,shiftOn, key, hyp) => {
@@ -43,7 +43,8 @@ export const clearCommand = (currentState, shiftOn, key) => {
 }
 export const evalExpr = (currentState, shiftOn, key) => {
    
-    const parser= new Parser();
+    const parser= new ExprEval.Parser();
+    parser.unaryOps = {...parser.unaryOps, cbrt: Math.cbrt}
     const expr = parser.parse(currentState.expr)
     return {
         ok: true, 
@@ -68,7 +69,8 @@ export const shiftOn = (currentState, shiftOn, key, hyp) => {
 
  export const saveMemory = (currentState, shiftOn, key, hyp) => {
     return {
-        ok: true
+        ok: true, 
+        memory: {...currentState}
     }
 }
 
