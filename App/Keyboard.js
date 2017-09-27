@@ -1,4 +1,5 @@
-import {evalExpr, clearCommand, shiftOn, tenPowX,logaritX, saveMemory, toggleHyp} from './Services/MathEngine'
+import {evalExpr, clearCommand, shiftOn, tenPowX,logaritX, saveMemory, toggleHyp, randomNumber} from './Services/MathEngine'
+const pi = Math.PI;
 
 export default  keyboard = [
     [{normal: {display: 'shift on', cmd: shiftOn}, shift: {display: 'shift off', cmd: shiftOn}},{normal:'MODE', shift: null},{normal:{display:'x²', lcdDisplay:'²',expr: '^2'}, shift: {display: '√', lcdDisplay : '√(', expr: 'sqrt('}},{normal:{display : 'log', lcdDisplay: 'log(', expr: 'log(' }, shift: {display: '10^x', cmd: tenPowX}},{normal:{display : 'ln', lcdDisplay: 'ln(', expr: 'ln(' }, shift: {display: 'e^x', cmd:logaritX}},{normal:'On', shift: 'On'} ],
@@ -6,7 +7,7 @@ export default  keyboard = [
     [{normal:'±', shift:{display: '∛', lcdDisplay: '∛(', expr: 'cbrt('}},{normal:'🞂', shift: {display:'x³', lcdDisplay: '³', expr: '^3'}},{normal:{display: '[(...', lcdDisplay: '(',expr:'('}, shift: {display:'x^y', lcdDisplay: '^', expr:'^'}},{normal:{lcdDisplay: ')',display: '...)]', expr: ')'}, shift: {display:'1/x', lcdDisplay: '1/(', expr:'1/('}},{normal:'x^y', shift: 'x^1/y'},{normal:'MR', shift: 'Min'} ],
     [{normal:'7', shift:'x->'},{normal:'8', shift: 'ơn'},{normal:'9', shift: 'ơn-1'},{normal: { display: 'C', cmd: clearCommand}, shift: 'x ⭤ M'},{normal:'CE', shift: 'SAC'} ],
     [{normal:'4', shift:'⅀x^2'},{normal:'5', shift: '⅀x'},{normal:'6', shift: 'n'},{normal:{ display: '×', expr:'*'}, shift: 'ENG'},{normal: {display: '÷', expr: '/'}, shift: 'ENG'} ],
-    [{normal:'1', shift:'nPr'},{normal:'2', shift: 'nCr'},{normal:'3', shift: 'x!'},{normal:{display:'+',expr: '+'}, shift: 'R=P'},{normal: {display: '-', expr: '-'}, shift: 'P=R'} ],
-    [{normal:'0', shift:'RND'},{normal: {display:'.', expr: '.'}, shift: 'RND#'},{normal:'EXP', shift: 'π'},{normal: {display:  '=', cmd: evalExpr}, shift: {display:'%', expr: '/100'}},{normal:{ display:'M+', cmd: saveMemory}, shift: 'M-'} ]
-         
+    [{normal:'1', shift:{display:'nPr', expr: '^'}},{normal:'2', shift: 'nCr'},{normal:'3', shift: {display:'x!', lcdDisplay:'!', expr: '!'}},{normal:{display:'+',expr: '+'}, shift: 'R=P'},{normal: {display: '-', expr: '-'}, shift: 'P=R'} ],
+    [{normal:'0', shift:'RND'},{normal: {display:'.', expr: '.'}, shift: {display: 'RND#', cmd: randomNumber}},{normal:{display:'EXP', expr: '*10^'}, shift: {display: 'π', expr: pi}},{normal: {display:  '=', cmd: evalExpr}, shift: {display:'%', expr: '/100'}},{normal:{ display:'M+', cmd: saveMemory}, shift: 'M-'} ]
+
 ]
