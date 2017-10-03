@@ -1,4 +1,4 @@
-#Status
+# Status
 [![Build Status](https://travis-ci.org/samuraitruong/react-native-fx260.svg?branch=develop)](https://travis-ci.org/samuraitruong/react-native-fx260)
 
 # Priview
