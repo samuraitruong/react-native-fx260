@@ -1,0 +1,18 @@
+stages:
+  - build
+  - package
+  - deploy
+  
+before_script:
+   - echo  $USER
+   - echo whoami
+   - nvm install 8.5.0
+   - npm install
+
+android-build:
+  stage: build
+  script: 
+    - "npm run android:build"
+  artifacts:
+    paths:
+      - android/app/build/outputs/apks/*.zip

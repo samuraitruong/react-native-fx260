@@ -1,6 +1,7 @@
 import {Dimensions, Platform} from 'react-native'
 
 const { width, height } = Dimensions.get('window')
+export const isPhone = (Math.max(width, height) < 767);
 
 // Used via Metrics.baseMargin
 const metrics = {
