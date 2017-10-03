@@ -24,3 +24,5 @@ deploy:
   on:
     repo: samuraitruong/react-native-fx260
     branch: master
+  after_success:
+    - sh set_tags.sh
