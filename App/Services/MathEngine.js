@@ -5,7 +5,7 @@ var math = require('mathjs');
 const processKey =  (currentState,shiftOn, key, hyp) => {
     console.tron.display({name: 'process key', value: key})
     const newState = {...currentState};
-    
+
     if(newState.reset) {
         newState.display = '';
         newState.expr ='';
@@ -14,13 +14,13 @@ const processKey =  (currentState,shiftOn, key, hyp) => {
 
     let {display, expr, lcdDisplay, cmd} = shiftOn?key.shift: key.normal;
     display = lcdDisplay || display;
-    
+
     if(typeof cmd == 'function') {
         console.tron.display({name: 'key has command', value: {key, hyp}})
         return cmd(currentState, shiftOn, key, hyp);
     }
     console.tron.display({name: 'process key get display value', value: display})
-    
+
     display =  display || (shiftOn?key.shift : key.normal);
 
     expr =  expr || (shiftOn?key.shift : key.normal);
@@ -29,32 +29,41 @@ const processKey =  (currentState,shiftOn, key, hyp) => {
     newState.expr = (newState.expr? newState.expr: '') +  expr;
 
     newState.lastKey = key;
-    
+
     return Promise.resolve({
         ok: true,
         data: newState
     });
 }
-export const clearCommand = (currentState, shiftOn, key) => { 
+export const clearCommand = (currentState, shiftOn, key) => {
     return Promise.resolve({
         ok: true,
         data: {display: '', reset: null, expr: ''}
     });
 }
+export const randomNumber = (currentState, shiftOn, key) => {
+  const rnd = Math.round(Math.random() * 1000)/1000
+
+  return Promise.resolve({
+      ok: true,
+      data: {...currentState, display: currentState.display + rnd,  expr: currentState.expr + rnd}
+  });
+}
+
 export const evalExpr = (currentState, shiftOn, key) => {
-   
+
     const parser= new ExprEval.Parser();
     parser.unaryOps = {...parser.unaryOps, cbrt: Math.cbrt}
     const expr = parser.parse(currentState.expr)
     return {
-        ok: true, 
+        ok: true,
 
         data: {...currentState,display: expr.evaluate().toString(), reset: true}
     }
 }
 export const shiftOn = (currentState, shiftOn, key, hyp) => {
      return {
-         ok: true, 
+         ok: true,
          shiftOn: shiftOn?false:true,
          data: {...currentState}
      }
@@ -69,7 +78,7 @@ export const shiftOn = (currentState, shiftOn, key, hyp) => {
 
  export const saveMemory = (currentState, shiftOn, key, hyp) => {
     return {
-        ok: true, 
+        ok: true,
         memory: {...currentState}
     }
 }
@@ -80,18 +89,18 @@ export const shiftOn = (currentState, shiftOn, key, hyp) => {
     let clone = Object.assign({}, result.data);
 
     let value = Math.pow(10, parseFloat(clone.display));
-   
+
     return    {
         data : {display: value.toString(), expr: value},
         ok: true
     }
-    
+
 }
 
 export const logaritX = (currentState, shiftOn, key) => {
     const result = evalExpr(currentState, shiftOn, key)
     let value = Math.exp(parseFloat(result.data.display));
-   
+
     return    {
         data : {display: value.toString(), expr: value},
         ok: true
