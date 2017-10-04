@@ -4,7 +4,7 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  keyPress: ['current','shiftOn','key', 'hyp'],
+  keyPress: ['current','shiftOn','key', 'hyp', 'memories'],
   onKeyboardProcessed: ['result'],
   mathSuccess: ['payload'],
   toggleShiftKey : ['shiftOn'],
@@ -22,7 +22,7 @@ export default Creators
 export const INITIAL_STATE = Immutable({
   shiftOn: false,
   error: null,
-  current: {}, 
+  current: {},
   keyChain: [],
   memories: [],
   hyp: false

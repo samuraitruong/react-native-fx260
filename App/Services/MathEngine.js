@@ -2,24 +2,29 @@ import Persitence from './ImmutablePersistenceTransform'
 import ExprEval from '../expr-eval/index'
 var math = require('mathjs');
 
-const processKey =  (currentState,shiftOn, key, hyp) => {
+const processKey =  (currentState,shiftOn, key, hyp, memories) => {
     console.tron.display({name: 'process key', value: key})
     const newState = {...currentState};
 
-    if(newState.reset) {
+    if(newState.reset && ((shiftOn && !key.shift.aggregate) ||
+      (!shiftOn && !key.normal.aggregate))) {
+      console.tron.display({name: 'resetted reseted', value: key})
         newState.display = '';
         newState.expr ='';
         newState.reset = null;
+
+    }
+    else{
+      newState.reset = null;
     }
 
     let {display, expr, lcdDisplay, cmd} = shiftOn?key.shift: key.normal;
     display = lcdDisplay || display;
 
     if(typeof cmd == 'function') {
-        console.tron.display({name: 'key has command', value: {key, hyp}})
-        return cmd(currentState, shiftOn, key, hyp);
+        console.tron.display({name: 'key has command', value: {key, hyp, memories}})
+        return cmd(currentState, shiftOn, key, hyp, memories);
     }
-    console.tron.display({name: 'process key get display value', value: display})
 
     display =  display || (shiftOn?key.shift : key.normal);
 
@@ -76,11 +81,28 @@ export const shiftOn = (currentState, shiftOn, key, hyp) => {
     }
 }
 
- export const saveMemory = (currentState, shiftOn, key, hyp) => {
+export const saveMemory = (currentState, shiftOn, key, hyp) => {
+  const parser= new ExprEval.Parser();
+  parser.unaryOps = {...parser.unaryOps, cbrt: Math.cbrt}
+  const expr = parser.parse(currentState.expr);
+
     return {
         ok: true,
-        memory: {...currentState}
+        memory: {...currentState, value: expr.evaluate()}
     }
+}
+
+export const recallMemory = (currentState, shiftOn, key, hyp, memories) => {
+  if(memories) {
+    const total = memories.reduce((total, value) => total.value + value.value);
+    return {
+      ok: true,
+      data: {...currentState,display: currentState.display+'MR('+total+')', expr: currentState.expr +total}
+    }
+  }
+  return {
+      ok: true,
+  }
 }
 
 
