@@ -59,7 +59,9 @@ export const evalExpr = (currentState, shiftOn, key) => {
 
     const parser= new ExprEval.Parser();
     parser.unaryOps = {...parser.unaryOps, cbrt: Math.cbrt}
+    console.tron.log({display: 'The expression parser before', value: currentState})
     const expr = parser.parse(currentState.expr)
+    console.tron.log({display: 'The expression parser', value: expr})
     return {
         ok: true,
 
@@ -117,6 +119,22 @@ export const recallMemory = (currentState, shiftOn, key, hyp, memories) => {
         ok: true
     }
 
+}
+
+export const reverseNumber = (currentState, shiftOn, key) => {
+  const reverseState  = {...currentState}
+  console.tron.display({name: 'reverse number', value : currentState})
+  reverseState.expr ='-1*(' + currentState.expr + ')';
+
+  console.tron.display({name: 'reverse number after', value : reverseState})
+
+  const result = evalExpr(reverseState, shiftOn, key)
+  let value = Math.exp(parseFloat(result.data.display, 10));
+
+  return    {
+      data : {display: value.toString(), expr: value},
+      ok: true
+  }
 }
 
 export const logaritX = (currentState, shiftOn, key) => {

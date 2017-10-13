@@ -26,6 +26,7 @@ export function * keypress(engine, action) {
                 yield put(MathActions.onKeyboardProcessed(response.data))
         }
     } catch (error) {
+        console.tron.display({name: 'Erorr saga', value : error})
         yield put(MathActions.onError('Error'))
     }
 }
