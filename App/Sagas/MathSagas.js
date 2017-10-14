@@ -3,9 +3,9 @@ import {path} from 'ramda'
 import MathActions from '../Redux/MathRedux'
 
 export function * keypress(engine, action) {
-    const {current, shiftOn, key, hyp} = action;
+    const {current, shiftOn, key, hyp, memories} = action;
     try {
-        const response = yield call(engine.processKey, current, shiftOn, key,hyp)
+        const response = yield call(engine.processKey, current, shiftOn, key,hyp, memories)
         console
             .tron
             .display({name: 'return from process key', value: response})
@@ -21,11 +21,12 @@ export function * keypress(engine, action) {
             } else
                 if(response.memory) {
                     yield put(MathActions.addMemoryItem(response.memory))
-                } 
+                }
                 else
                 yield put(MathActions.onKeyboardProcessed(response.data))
         }
     } catch (error) {
+        console.tron.display({name: 'Erorr saga', value : error})
         yield put(MathActions.onError('Error'))
     }
 }

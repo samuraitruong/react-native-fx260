@@ -1,5 +1,8 @@
+# Status
+[![Build Status](https://travis-ci.org/samuraitruong/react-native-fx260.svg?branch=develop)](https://travis-ci.org/samuraitruong/react-native-fx260)
+
 # Priview
-![Imgur](https://i.imgur.com/kablw0c.png)
+![Imgur](https://i.imgur.com/itPSruh.png)
 
 #  fx260
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)

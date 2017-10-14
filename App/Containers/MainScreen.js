@@ -11,23 +11,23 @@ import styles from './Styles/MainScreenStyle'
 
 class MainScreen extends Component {
   renderRowKeys(keys, index) {
-    const {shiftOn, current, hyp} = this.props.math;
+    const {shiftOn, current, hyp, memories}  = this.props.math;
 
     const buttons = keys.filter(key=> (key.hyp != true && !hyp) || (key.hyp == null || (hyp && key.hyp))).map(key => {
 
       let {display, expr} = key.normal;
       display = display || key.normal;
-      
+
       const shiftText = (key.shift && key.shift.display)?key.shift.display :key.shift;
-      
+
       return (
         <View key={shiftText + display} style={styles.keyboardKeyWrap}>
           <Text style={styles.shiftText}>{shiftOn? display: shiftText}</Text>
           <TouchableOpacity
             title={display}
             style={styles.keyboardButton}
-            onPress={() => this.props.keyPress(current, shiftOn, key, hyp)}
-            onLongPress={() => this.props.keyPress(current, true, key, hyp)}>
+            onPress={() => this.props.keyPress(current, shiftOn, key, hyp, memories)}
+            onLongPress={() => this.props.keyPress(current, true, key, hyp, memories)}>
             <Text style={styles.keyboardButtonText}>{shiftOn? shiftText: display}</Text>
           </TouchableOpacity>
         </View>
@@ -73,7 +73,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    keyPress: (current, shiftOn, key, hyp) => dispatch(MathActions.keyPress(current, shiftOn, key,hyp))
+    keyPress: (current, shiftOn, key, hyp, memories) => dispatch(MathActions.keyPress(current, shiftOn, key,hyp, memories))
   }
 }
 
