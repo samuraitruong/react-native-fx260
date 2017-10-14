@@ -15,14 +15,14 @@ android:
 script:
 - cd android && ./gradlew assembleRelease
 deploy:
-  skip_cleanup: "true"
+  skip_cleanup: 'true'
   provider: releases
   api_key:
     secure: AAKY74JdIJw2MDz1cBiXQwkUGzlD8v9DmDGtKXb6Xi0/p2BkAwxVBZ2VQuPhaT5vGcImTZg/o0mK/42KK35mKBvh4xrOgzvTKuD5Thmy2MCS21fRenZoZdjqtrqpJT/e0I2YzHre03fTOhUz4ng6c1n2K58hoz1ABdeD+jZaRXTz5Q+754ULJvcE2CNzjIM5j/x+sOmMkbj6KNA0Tul7pmQ5zCivN+upCAxodabnU4ank2ONm+rMN5iMsAiRPQRhfq4K/pQAEbzQlQfZUMEXO7oXaeiee3Fjh9NvhtFvbxHdgYbXZZoOAD+/LnO9/lkS38WunnF9GtiXAh05J0sacG6/uM1FBUQiaV9hfywitOo0EAXhuOo2JsVLsxJh4VjIkLFutgu9q4e1DWg7XzZ6MMmX9vjsblxBMUCP+OBd8NBHfOnebO6cvnn8ZpsleJc+kS27xXgocFCQr00EZbL1tliFNpJZFyZAmSVmktXkbIsLdCAnkoGuWdXaVOb6y2NMQMgjbNx9nzj1vZUclaEC/nZm2T+o5daXH4dUs84NigZjUlnZ09l1q10WG3RlhpfhA7Yj0IhAwasR74yR1OEKMgjwtnvBFKMQHMxM2hEm7gcInIX7IRIccslCc+wA9M4yWW08SkJnH4OInPkwHtBha/moyOEFz7A8IZDfNVg8gFY=
   file: $TRAVIS_BUILD_DIR/android/app/build/outputs/apk/app*release*.apk
-  file_glob: "true"
+  file_glob: 'true'
   on:
     repo: samuraitruong/react-native-fx260
     branch: master
   after_success:
-    - sh set_tags.sh
+  - sh set_tags.sh
