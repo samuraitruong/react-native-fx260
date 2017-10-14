@@ -23,6 +23,8 @@ deploy:
   file_glob: "true"
   on:
     repo: samuraitruong/react-native-fx260
+    tags: true
     branch: master
+    branch: /^v\d+(\.\d+)+$/
   after_success:
     - sh set_tags.sh
