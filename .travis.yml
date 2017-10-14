@@ -26,11 +26,3 @@ deploy:
     branch: master
   after_success:
   - sh set_tags.sh
-  provider: bintray
-    file: $TRAVIS_BUILD_DIR/android/app/build/outputs/apk/app*release*.apk
-    user: "samuraitruong"
-    key:
-      secure: O+yLOLFYonGwmIvqrYHrqNvZTvLnvnKR9kMF9vWmz4FzPdXVYtYW96jTp9BKsOZla4gJucVgztm2Heq1LIGummv0E8H3cQOpgQAGWZqYHqmGgD3CESN/Cs0h74aaGJbMW1oi6h7+apszUKDeaJuxq3oLMK9lRRpygkB8WH1GKKQcJavugsg7DFaq8t/3I05m47Yrfkbsz1rIzRw+Glyg8qR4nkbM9LvjrkVx/3XYiAsCSKKM3Z1s2PZrupSDVBjSblhfDvyFAgrfhs0rmFf7djPeZy7TvQb4ZvGVCgJOjVWiHbzf3HyMgcZ2IzNoXBmfiDJrgYn4YiW5AjakPhynsQXlvHBUdBXwrqGeC6YDXBlBT67z8i71Z57BPmq9+fDbvYSLUgOD5cTOK9Fu59syiAF4Ga8Nj/jeVZYcvn7H7Zdqmk0Iuy0YqlJBusBBK7sD/RJUOWM3zxx2KJAx6LPDqEX7NUBz99fmAY2H9GZvrM9sFtzFmMDqb52i4xtKJ0667iZUy1WsCB3ugzvrJPL+mo49ZJuSY/+mTmmBjR3C/zqL++82Kv7HFTIiId7HBzSsXsBOsIipgeV7uV7OQxM02z0bEzj0SXHYGAsEgwJ5a/EBXppBTdMYtWZjrxaBb8KVFxYOYZZffgmCY4cQ7hvfitHSLoSwpdQ15JFrd22NVk0=
-    on:
-      repo: samuraitruong/react-native-fx260
-      all_branches: true
